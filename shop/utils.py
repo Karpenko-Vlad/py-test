@@ -252,7 +252,7 @@ def generate_and_send_pdf_for_invoice(request, invoice_id=None):
 
     msg = EmailMessage()
     msg['Subject'] = 'Our family reunion'
-    msg['From'] = "example@mail.com"
+    msg['From'] = "example@python.sinella.net"
     msg['To'] = str(request.user.email)
 
     with open(f'/tmp/{pdf_name}.pdf', 'rb') as fp:
