@@ -1,0 +1,32 @@
+name: Web Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Zip Project
+      id: zip-project
+      run: zip -r deploy.zip .
+
+    - name: Get Commit Hash
+      id: version-hash
+      run: |
+        echo "::set-output name=hash::${GITHUB_SHA}"
+
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v10
+      with:
+        aws_access_key: ${{ secrets.AWS_IAM_KEY }}
+        aws_secret_key: ${{ secrets.AWS_IAM_SECRET }}
+        application_name: ${{ secrets.AWS_EB_APP }}
+        environment_name: ${{ secrets.AWS_EB_ENV }}
+        version_label: ${{ steps.version-hash.outputs.hash }}
+        region: ${{ secrets.AWS_REGION }}
+        deployment_package: deploy.zip
