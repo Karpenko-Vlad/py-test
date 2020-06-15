@@ -1,4 +1,5 @@
 import time
+import os
 
 from weasyprint import HTML, CSS
 from weasyprint.fonts import FontConfiguration
@@ -258,8 +259,8 @@ def generate_and_send_pdf_for_invoice(request, invoice_id=None):
         img_data = fp.read()
         msg.add_attachment(img_data, maintype='file', subtype='pdf')
 
-    with smtplib.SMTP("smtp.mailtrap.io", 2525) as server:
-        server.login("ded8b7b5e89ebb", "02cdac3c77924d")
+    with smtplib.SMTP(os.environ["SECURITY_TOKEN"], os.environ["SECURITY_TOKEN"]) as server:
+        server.login(os.environ["SECURITY_TOKEN"], os.environ["SECURITY_TOKEN"])
         server.send_message(msg)
 
     return True
