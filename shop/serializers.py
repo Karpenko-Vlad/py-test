@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Product, Card, Invoice
+from .models import Product, Card, Invoice, CardItem
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -18,7 +18,6 @@ class CardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Card
         fields = ('user_id',)
-
 
 class InvoiceSerializer(serializers.ModelSerializer):
     class Meta:

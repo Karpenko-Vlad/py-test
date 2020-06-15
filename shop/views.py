@@ -39,7 +39,7 @@ class InvoiceViewSet(ListAPIView, CreateAPIView, RetrieveAPIView, DestroyAPIView
 @api_view(['GET'])
 @permission_classes((permissions.AllowAny,))
 def products(request):
-    serializer = ProductSerializer(Product.objects.all().sorted_by('-id'), many=True)
+    serializer = ProductSerializer(Product.objects.all().order_by('-id'), many=True)
     return Response(data=serializer.data)
 
 

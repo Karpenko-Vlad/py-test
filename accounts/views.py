@@ -6,6 +6,7 @@ from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveAPIView,
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
+from django.contrib.auth.hashers import make_password
 
 from accounts.models import User
 from accounts.serializers import UserSerializer
@@ -32,6 +33,9 @@ def user_registration(request):
     if not status:
         return Response(answer)
 
+    serializer.validated_data["password"] = make_password(serializer.validated_data["password"])
     serializer.create(serializer.validated_data)
+
+    del serializer.validated_data["password"]
 
     return Response(serializer.validated_data)
