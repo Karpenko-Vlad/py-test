@@ -259,8 +259,8 @@ def generate_and_send_pdf_for_invoice(request, invoice_id=None):
         img_data = fp.read()
         msg.add_attachment(img_data, maintype='file', subtype='pdf')
 
-    with smtplib.SMTP(os.environ["SECURITY_TOKEN"], os.environ["SECURITY_TOKEN"]) as server:
-        server.login(os.environ["SECURITY_TOKEN"], os.environ["SECURITY_TOKEN"])
+    with smtplib.SMTP(os.environ["SMTP_SERVER"], os.environ["SMTP_PORT"]) as server:
+        server.login(os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"])
         server.send_message(msg)
 
     return True
